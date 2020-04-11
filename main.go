@@ -1,11 +1,19 @@
 package main
 
 import (
-	"github.com/victor-nach/go-testing/api"
+	"os"
+
+	"github.com/joho/godotenv"
+	
+	"github.com/victor-nach/user-management-go/api/routes"
 )
 
 func main() {
-	router := api.Router()
-	router.Run(":8080")
-
+	_ = godotenv.Load()
+	router := routes.Router()
+	PORT, ok := os.LookupEnv("PORT")
+	if !ok {
+		PORT = "8080"
+	}
+	router.Run(":" + PORT)
 }
